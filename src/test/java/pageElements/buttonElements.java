@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 public class buttonElements {
 
     WebDriver driver;
-    String baseURL = "https://automation.herolo.co.il/";
 
     By link_wrapper_whatsapp = By.xpath("//*[@id='gatsby-focus-wrapper']/div/a[2]");
     By link_linkedin = By.xpath("//*[@id='section-contact']/section/div[2]/div/div[2]/div/a[1]");

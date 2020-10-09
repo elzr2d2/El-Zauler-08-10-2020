@@ -218,6 +218,39 @@ public class LandingPageSteps {
 
     }
 
+    @When("^user scrolls to the (.*) image section$")
+    public void userScrollsToTheFirstImageSection() {
+
+    }
+
+
+    @Then("^the (.*) section images should be swapped$")
+    public void theImagesShouldBeSwapped() {
+    }
+
+    @And("clicks on the dots")
+    public void clicks_dots() {
+
+    }
+
+    @And("dragging an image {string}")
+    public void dragging_image(String side) {
+
+    }
+
+    @And("wait")
+    public void wait_on_image_section() throws InterruptedException {
+        Thread.sleep(5000);
+    }
+
+    @And("^clicks on the (.*) arrow$")
+    public void clicksOnTheArrowArrow() {
+    }
+
+    @And("^dragging an image (.*)$")
+    public void draggingAnImageSide() {
+    }
+
     @After
     public void afterScenario() {
         driver.quit();

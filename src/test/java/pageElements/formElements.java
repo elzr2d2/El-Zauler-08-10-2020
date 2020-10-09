@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 public class formElements {
 
     WebDriver driver;
-    String baseURL = "https://automation.herolo.co.il/";
+
 
     By tb_footer_name = By.name("name");
     By tb_footer_email = By.name("email");
