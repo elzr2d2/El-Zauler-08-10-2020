@@ -21,9 +21,8 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.*;
 
 public class LandingPageSteps {
-    WebDriver driver = null;
     final String baseUrl = "https://automation.herolo.co.il/";
-
+    WebDriver driver = null;
     formElements formElementsExe;
     buttonElements buttonExe;
     functionalElements functionalExe;
@@ -112,16 +111,12 @@ public class LandingPageSteps {
         }
     }
 
-    @And("the popup form appears")
-    public void popup_form_appears() {
-
-    }
-
     @And("scrolls down")
-    public void scroll_down() {
+    public void scroll_down() throws InterruptedException {
         functionalExe = new functionalElements(driver);
 
         functionalExe.scroll_down();
+        Thread.sleep(2000);
     }
 
     @When("^click the (.*) button$")
@@ -142,7 +137,7 @@ public class LandingPageSteps {
             case "facebook":
                 buttonExe.click_contact_facebook();
                 break;
-            case "herolo.co.il":
+            case "Herolo":
                 buttonExe.click_contact_website();
                 break;
             case "scroll_up":
@@ -156,20 +151,15 @@ public class LandingPageSteps {
     @Then("user gets into the thank-you page")
     public void get_thank_you_page() throws InterruptedException {
         waitForLoad(driver);
-        Thread.sleep(5000);
-
 
         assertTrue(driver.getPageSource().contains("תודה"));
 
-        Thread.sleep(5000);
-
+        Thread.sleep(2000);
     }
 
     @Then("^user gets into a (.*) page$")
     public void Gets_into_Linked_page(String link_button) throws InterruptedException {
         waitForLoad(driver);
-        Thread.sleep(5000);
-
 
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
 
@@ -177,17 +167,17 @@ public class LandingPageSteps {
         Thread.sleep(2000);
 
         if (!driver.getCurrentUrl().equals(baseUrl))
-            assertTrue(driver.getPageSource().contains(link_button) || driver.getCurrentUrl().equals("herolo.co.il"));
+            assertTrue(driver.getPageSource().contains(link_button));
         else
             fail();
 
-        Thread.sleep(5000);
+        Thread.sleep(2000);
     }
 
     @Then("user gets into the top of the page")
     public void check_if_top() throws InterruptedException {
         buttonExe = new buttonElements(driver);
-        Thread.sleep(5000);
+        Thread.sleep(2000);
 
         assertFalse(buttonExe.is_scroll_top_visible());
 

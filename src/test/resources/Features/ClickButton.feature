@@ -26,11 +26,11 @@ Feature: Click Button
     Then user gets into a <link_button> page
 
     Examples:
-      | link_button  | section |
-      | linkedin     | down    |
-      | whatsapp     | down    |
-      | facebook     | down    |
-      | herolo.co.il | down    |
+      | link_button | section |
+      | linkedin    | down    |
+      | whatsapp    | down    |
+      | facebook    | down    |
+      | Herolo      | down    |
 
 
 

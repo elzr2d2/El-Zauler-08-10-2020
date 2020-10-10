@@ -25,3 +25,6 @@ Java, Selenium, Cucumber, Junit, Maven, Github
     * Website 
     * Facebook
     * Linkedin
+    
+### Notes:
+* The Thread.sleep() function is for visual purposes only.

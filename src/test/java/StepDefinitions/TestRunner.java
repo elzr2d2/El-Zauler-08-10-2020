@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
                 "junit:target/JUnityReports/report.xml",
                 "json:target/JSONReports/report.json",
                 "html:target/HtmlReports/report"},
-                tags = "@FunctionalityTesting")
+        tags = "@FunctionalityTesting")
 public class TestRunner {
 
 }
