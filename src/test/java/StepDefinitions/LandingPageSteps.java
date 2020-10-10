@@ -8,17 +8,14 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageElements.buttonElements;
 import pageElements.formElements;
 import pageElements.functionalElements;
-import pageElements.imageElements;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -29,7 +26,6 @@ public class LandingPageSteps {
 
     formElements formElementsExe;
     buttonElements buttonExe;
-    imageElements imageExe;
     functionalElements functionalExe;
 
 
@@ -121,11 +117,11 @@ public class LandingPageSteps {
 
     }
 
-    @And("^scrolls (.*)$")
-    public void scrollsDown(String element) {
+    @And("scrolls down")
+    public void scroll_down() {
         functionalExe = new functionalElements(driver);
 
-        functionalExe.scroll_to_element(element);
+        functionalExe.scroll_down();
     }
 
     @When("^click the (.*) button$")
@@ -195,70 +191,6 @@ public class LandingPageSteps {
 
         assertFalse(buttonExe.is_scroll_top_visible());
 
-    }
-
-    @When("^user scrolls to the (.*) section$")
-    public void scroll_to_image_section(String section) {
-        functionalExe = new functionalElements(driver);
-
-        if (section.equals("first")) {
-            functionalExe.scroll_to_element(section);
-        } else if (section.equals("second")) {
-            functionalExe.scroll_to_element(section);
-        }
-
-    }
-
-
-    @Then("^the (.*) section images should be swapped$")
-    public void check_image_Swap(Boolean is_swapped) {
-
-        assert(is_swapped);
-    }
-
-
-    @And("^clicks on the dots of the (.*) section$")
-    public void clicks_dots(String section) throws InterruptedException {
-        imageExe = new imageElements(driver);
-        List<WebElement> dots = imageExe.get_list_dots(section);
-        Thread.sleep(2000);
-
-        for (WebElement dot : dots) {
-            String source = imageExe.get_image_section_info(section);
-            dot.click();
-            String dest = imageExe.get_image_section_info(section);
-
-            if (source.equals(dest)) {
-                check_image_Swap(false);
-            }
-
-            Thread.sleep(1000);
-
-        }
-
-        check_image_Swap(true);
-    }
-
-    @And("dragging an image (.*)")
-    public void dragging_image(String side) {
-
-    }
-
-    @And("^clicks on the (.*) arrow (.*) section$")
-    public void clicks_on_arrow(String side, String section) throws InterruptedException {
-        imageExe = new imageElements(driver);
-
-        String source = imageExe.get_image_section_info(section);
-        imageExe.click_on_arrow(side);
-
-        driver.manage().wait(5000);
-        String dest = imageExe.get_image_section_info(section);
-
-        check_image_Swap(!source.equals(dest));
-    }
-
-    @And("^dragging an image (.*)$")
-    public void draggingAnImageSide() {
     }
 
     @After

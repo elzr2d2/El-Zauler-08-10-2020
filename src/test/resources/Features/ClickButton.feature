@@ -3,12 +3,12 @@ Feature: Click Button
 
   Scenario Outline: check the scroll up button functionality
     Given user goes to the landing page
-    And scrolls 'down'
+    And scrolls <section>
     When click the <button> button
     Then user gets into the top of the page
     Examples:
-      | button    |
-      | scroll_up |
+      | button    | section |
+      | scroll_up | down    |
 
   Scenario Outline: click wrapper whatsapp link button
     Given user goes to the landing page
@@ -21,16 +21,16 @@ Feature: Click Button
 
   Scenario Outline: click <link_button> link button
     Given user goes to the landing page
-    And scrolls 'down'
+    And scrolls <section>
     When click the <link_button> button
     Then user gets into a <link_button> page
 
     Examples:
-      | link_button  |
-      | linkedin     |
-      | whatsapp     |
-      | facebook     |
-      | herolo.co.il |
+      | link_button  | section |
+      | linkedin     | down    |
+      | whatsapp     | down    |
+      | facebook     | down    |
+      | herolo.co.il | down    |
 
 
 
