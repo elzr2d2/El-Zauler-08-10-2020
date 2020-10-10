@@ -19,10 +19,6 @@ public class formElements {
     By tb_section_phone = By.id("telephone");
     By btn_section_send = By.xpath("//*[@id='section-inputs']/div[3]/a");
 
-    By tb_popup_name = By.xpath("//*[@id='modal-form']/input/name='name'");
-    By tb_popup_email = By.xpath("//*[@id='modal-form']/input/name='email'");
-    By tb_popup_phone = By.xpath("//*[@id='modal-form']/input/name='phone'");
-    By btn_popup_send = By.xpath("//*[@id='modal-form']/button");
 
     public formElements(WebDriver driver) {
         this.driver = driver;
@@ -79,26 +75,4 @@ public class formElements {
     public void click_section_send() {
         driver.findElement(btn_section_send).click();
     }
-
-
-    //============POPUP FORM============
-    public void insert_popup_name(String name) {
-
-        driver.findElement(tb_popup_name).sendKeys(name);
-    }
-
-    public void insert_popup_email(String email) {
-
-        driver.findElement(tb_popup_email).sendKeys(email);
-    }
-
-    public void insert_popup_phone(String phone) {
-
-        driver.findElement(tb_popup_phone).sendKeys(phone);
-    }
-
-    public void click_popup_send() {
-        driver.findElement(btn_popup_send).click();
-    }
-
 }

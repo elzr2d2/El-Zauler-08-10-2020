@@ -7,16 +7,18 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageElements.buttonElements;
 import pageElements.formElements;
+import pageElements.functionalElements;
+import pageElements.imageElements;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -24,8 +26,11 @@ import static org.junit.Assert.*;
 public class LandingPageSteps {
     WebDriver driver = null;
     final String baseUrl = "https://automation.herolo.co.il/";
+
     formElements formElementsExe;
     buttonElements buttonExe;
+    imageElements imageExe;
+    functionalElements functionalExe;
 
 
     public void waitForLoad(WebDriver driver) {
@@ -59,7 +64,7 @@ public class LandingPageSteps {
     public void insert_form_values(String name, String email, String phone, String form) throws InterruptedException {
         formElementsExe = new formElements(driver);
 
-        if ("footer".equals(form)) {
+        if (form.equals("footer")) {
             formElementsExe.insert_footer_name(name);
             Thread.sleep(2000);
 
@@ -68,21 +73,9 @@ public class LandingPageSteps {
 
             formElementsExe.insert_footer_phone(phone);
             Thread.sleep(2000);
-
-        } else if ("popup".equals(form)) {
-            formElementsExe.insert_popup_name(name);
-            Thread.sleep(2000);
-
-            formElementsExe.insert_popup_email(email);
-            Thread.sleep(2000);
-
-            formElementsExe.insert_popup_phone(phone);
-            Thread.sleep(2000);
-
         } else {
             fail();
-            System.out.println("TEST FAILED!");
-
+            System.out.println("TEST FAILED at: insert_form_values");
         }
 
     }
@@ -117,14 +110,10 @@ public class LandingPageSteps {
             formElementsExe.click_footer_send();
         } else if ("section".equals(form)) {
             formElementsExe.click_section_send();
-        } else if ("popup".equals(form)) {
-            formElementsExe.click_popup_send();
         } else {
             fail();
-            System.out.println("TEST FAILED!");
-
+            System.out.println("TEST FAILED at: click_form_send");
         }
-
     }
 
     @And("the popup form appears")
@@ -132,10 +121,11 @@ public class LandingPageSteps {
 
     }
 
-    @And("scrolls down")
-    public void scrollsDown() {
-        Actions actions = new Actions(driver);
-        actions.keyDown(Keys.CONTROL).sendKeys(Keys.END).perform();
+    @And("^scrolls (.*)$")
+    public void scrollsDown(String element) {
+        functionalExe = new functionalElements(driver);
+
+        functionalExe.scroll_to_element(element);
     }
 
     @When("^click the (.*) button$")
@@ -198,17 +188,6 @@ public class LandingPageSteps {
         Thread.sleep(5000);
     }
 
-//    @Then("a popup should appears")
-//    public void check_if_popup_appears() {
-//        String mwh = driver.getWindowHandle();
-//        Set s = driver.getWindowHandles(); //this method will gives you the handles of all opened windows
-//
-//        for (Object o : s) {
-//            String popupHandle = o.toString();
-//            assertFalse(popupHandle.contains(mwh));
-//        }
-//    }
-
     @Then("user gets into the top of the page")
     public void check_if_top() throws InterruptedException {
         buttonExe = new buttonElements(driver);
@@ -218,33 +197,64 @@ public class LandingPageSteps {
 
     }
 
-    @When("^user scrolls to the (.*) image section$")
-    public void userScrollsToTheFirstImageSection() {
+    @When("^user scrolls to the (.*) section$")
+    public void scroll_to_image_section(String section) {
+        functionalExe = new functionalElements(driver);
+
+        if (section.equals("first")) {
+            functionalExe.scroll_to_element(section);
+        } else if (section.equals("second")) {
+            functionalExe.scroll_to_element(section);
+        }
 
     }
 
 
     @Then("^the (.*) section images should be swapped$")
-    public void theImagesShouldBeSwapped() {
+    public void check_image_Swap(Boolean is_swapped) {
+
+        assert(is_swapped);
     }
 
-    @And("clicks on the dots")
-    public void clicks_dots() {
 
+    @And("^clicks on the dots of the (.*) section$")
+    public void clicks_dots(String section) throws InterruptedException {
+        imageExe = new imageElements(driver);
+        List<WebElement> dots = imageExe.get_list_dots(section);
+        Thread.sleep(2000);
+
+        for (WebElement dot : dots) {
+            String source = imageExe.get_image_section_info(section);
+            dot.click();
+            String dest = imageExe.get_image_section_info(section);
+
+            if (source.equals(dest)) {
+                check_image_Swap(false);
+            }
+
+            Thread.sleep(1000);
+
+        }
+
+        check_image_Swap(true);
     }
 
-    @And("dragging an image {string}")
+    @And("dragging an image (.*)")
     public void dragging_image(String side) {
 
     }
 
-    @And("wait")
-    public void wait_on_image_section() throws InterruptedException {
-        Thread.sleep(5000);
-    }
+    @And("^clicks on the (.*) arrow (.*) section$")
+    public void clicks_on_arrow(String side, String section) throws InterruptedException {
+        imageExe = new imageElements(driver);
 
-    @And("^clicks on the (.*) arrow$")
-    public void clicksOnTheArrowArrow() {
+        String source = imageExe.get_image_section_info(section);
+        imageExe.click_on_arrow(side);
+
+        driver.manage().wait(5000);
+        String dest = imageExe.get_image_section_info(section);
+
+        check_image_Swap(!source.equals(dest));
     }
 
     @And("^dragging an image (.*)$")
